@@ -24,9 +24,10 @@
         <div id="buttons-view"></div>
 
         <form id="cartoon-form">
-            <label for="cartoon-input">Add Cartoon</label>
+            <label for="cartoon-input">Cartoon Search</label>
             <input type="text" id="cartoon-input">
             <br>
+
             <input id="add-cartoon" type="submit" value="Cartoon Search">
         </form>
 
@@ -38,10 +39,8 @@
 
             function displayCartoonInfo() {
 
-                var cartoon = $(this).attr("data-name");
+                var cartoon = $(this).attr("data-image");
                 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + cartoon + "&api_key=PIWMMqfQv5pYIEDGOVxFI1B9uua7kwGo";
-
-
                 $.ajax({
                     url: queryURL,
                     method: "GET"
@@ -49,66 +48,42 @@
                     console.log(response)
 
                     var cartoon = $("<div>")
-
                     var rating = response.Rated
-                    // Creates an element to have the rating displayed
                     var ratingDisplay = $("<p>").text("Rating: " + rating);
-
                     var imageDisplay = $("<img>").attr("src", + response.imageDisplay);
-
                     cartoon.append(imageDisplay, ratingDisplay);
-
                     $("#cartoons-view").prepend(cartoon);
-
                 });
-
             }
 
-            // Function for displaying movie data
             function renderButtons() {
 
-                // Deletes the movies prior to adding new movies
-                // (this is necessary otherwise you will have repeat buttons)
                 $("#buttons-view").empty();
-                // Loops through the array of movies
+
+
                 for (var i = 0; i < cartoons.length; i++) {
 
-                    // Then dynamicaly generates buttons for each movie in the array
-                    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
                     var a = $("<button>");
-                    // Adds a class of movie to our button
                     a.addClass("cartoon");
-                    // Added a data-attribute
                     a.attr("data-name", cartoons[i]);
-                    // Provided the initial button text
                     a.text(cartoons[i]);
-                    // Added the button to the buttons-view div
                     $("#buttons-view").append(a);
                 }
             }
 
-            // This function handles events where the add movie button is clicked
             $("#add-cartoon").on("click", function (event) {
                 event.preventDefault();
-                // This line of code will grab the input from the textbox
+
                 var cartoon = $("#cartoon-input").val().trim();
 
-                // The movie from the textbox is then added to our array
                 cartoons.push(cartoon);
 
-                // Calling renderButtons which handles the processing of our movie array
                 renderButtons();
             });
 
-            // Adding click event listeners to all elements with a class of "movie"
             $(document).on("click", ".cartoon", displayCartoonInfo);
 
-            // Calling the renderButtons function to display the intial buttons
             renderButtons();
-
-
-
-
         </script>
     </div>
 </body>
