@@ -35,33 +35,35 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript">
+
+
             var cartoons = ["Rugrats", "The Simpsons", "South Park", "Dragon Ball Z"];
 
             function displayCartoonInfo() {
 
-                var cartoon = $(this).attr("data-name");
-                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + cartoon + "&api_key=PIWMMqfQv5pYIEDGOVxFI1B9uua7kwGo&q=cartoons&limit=5";
+                var cartoon = $(this).attr("src");
+                var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + cartoon + "&api_key=PIWMMqfQv5pYIEDGOVxFI1B9uua7kwGo&limit=10";
 
                 $.ajax({
                     url: queryURL,
                     method: "GET"
                 }).then(function (response) {
                     console.log(response)
+
                     var cartoon = $("<div>")
                     var rating = response.Rated
                     var ratingDisplay = $("<p>").text("Rating: " + rating);
-                    var imageDisplay = $("<img>").attr("src", + response.imageDisplay);
-                    cartoon.append(imageDisplay, ratingDisplay);
+                    var imageDisplay = $("<img>").attr("src", + response);
+                    cartoon.append(ratingDisplay, imageDisplay);
                     $("#cartoons-view").prepend(cartoon);
                 });
             }
-
             function renderButtons() {
                 $("#buttons-view").empty();
                 for (var i = 0; i < cartoons.length; i++) {
                     var a = $("<button>");
                     a.addClass("cartoon");
-                    a.attr("data-name", cartoons[i]);
+                    a.attr("src", cartoons[i]);
                     a.text(cartoons[i]);
                     $("#buttons-view").append(a);
                 }
@@ -73,12 +75,11 @@
                 cartoons.push(cartoon);
                 renderButtons();
             });
-
             $(document).on("click", ".cartoon", displayCartoonInfo);
             renderButtons();
-
         </script>
     </div>
 </body>
+
 
 </html>
