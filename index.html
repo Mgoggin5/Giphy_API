@@ -20,6 +20,7 @@
 <body>
 
     <div class="container">
+        
         <h1>Cartoon Search</h1>
 
         <div id="buttons-view"></div>
@@ -33,10 +34,14 @@
         </form>
 
         <div id="cartoons-view"></div>
+
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
+
         var cartoons = ["Rugrats", "The Simpsons", "South Park", "Dragon Ball Z"];
+
         function displayCartoonInfo() {
             var cartoon = $(this).attr("src");
             // console.log(cartoon)
@@ -54,10 +59,11 @@
                     imageDisplay.attr("data-animate", response.data[i].images.fixed_height.url);
                     myCartoon.append(ratingDisplay, imageDisplay);
                     $("#cartoons-view").prepend(myCartoon);
-                    
+
                 }
             });
         }
+
         $(document).on("click", ".image", animate);
         function animate() {
             if ($(this).attr("src") === $(this).attr("data-still")) {
@@ -66,6 +72,7 @@
                 $(this).attr("src", $(this).attr("data-still"));
             }
         }
+
         function renderButtons() {
             $("#buttons-view").empty();
             for (var i = 0; i < cartoons.length; i++) {
@@ -78,6 +85,7 @@
 
             }
         }
+
         $("#add-cartoon").on("click", function (event) {
             $("#buttons-view").empty();
             event.preventDefault();
@@ -85,8 +93,10 @@
             cartoons.push(cartoon1);
             renderButtons();
         });
+
         $(document).on("click", ".cartoon", displayCartoonInfo);
         renderButtons();
+
     </script>
 </body>
 
