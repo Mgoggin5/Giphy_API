@@ -60,12 +60,22 @@
                     imageDisplay.attr("data-animate", response.data[i].images.fixed_height.url);
                     myCartoon.append(ratingDisplay, imageDisplay);
                     $("#cartoons-view").prepend(myCartoon);
+
                 }
+
             });
 
         }
 
+        $(document).on("click", ".image", animate);
 
+        function animate() {
+            if ($(this).attr("src") === $(this).attr("data-still")) {
+                $(this).attr("src", $(this).attr("data-animate"));
+            } else if ($(this).attr("src") === $(this).attr("data-animate")) {
+                $(this).attr("src", $(this).attr("data-still"));
+            }
+        }
 
 
         function renderButtons() {
@@ -86,10 +96,11 @@
             cartoons.push(cartoon1);
             renderButtons();
         });
-        $("#cartoon-input").val("");
+
 
         $(document).on("click", ".cartoon", displayCartoonInfo);
         renderButtons();
+
     </script>
 </body>
 
