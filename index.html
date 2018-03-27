@@ -43,6 +43,7 @@
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + cartoon + "&api_key=PIWMMqfQv5pYIEDGOVxFI1B9uua7kwGo&limit=10";
             $.get(queryURL).then(function (response) {
                 console.log(response)
+
                 for (var i = 0; i < response.data.length; i++) {
                     console.log(response.data[i]);
                     var myCartoon = $("<div>")
@@ -53,6 +54,7 @@
                     imageDisplay.attr("data-animate", response.data[i].images.fixed_height.url);
                     myCartoon.append(ratingDisplay, imageDisplay);
                     $("#cartoons-view").prepend(myCartoon);
+                    
                 }
             });
         }
@@ -72,6 +74,8 @@
                 a.attr("src", cartoons[i]);
                 a.text(cartoons[i]);
                 $("#buttons-view").append(a);
+                $("#cartoon-input").val("");
+
             }
         }
         $("#add-cartoon").on("click", function (event) {
